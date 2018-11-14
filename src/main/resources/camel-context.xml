@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cxf="http://camel.apache.org/schema/cxf"
+	xmlns:camel="http://camel.apache.org/schema/spring"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
+    ">
+
+	<bean class="org.apache.cxf.interceptor.LoggingOutInterceptor" id="loggingOutInterceptor" />
+	<bean class="org.apache.cxf.interceptor.LoggingInInterceptor" id="loggingInInterceptor" />
+	<bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor"
+		id="wss4jInInterceptor">
+		<constructor-arg>
+			<map>
+				<entry key="action" value="UsernameToken"/>
+				<entry key="passwordType" value="PasswordDigest" />
+				<entry key="passwordCallbackClass" value="com.kiktan.wssecurity.ServerPasswordCallback" />
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<cxf:cxfEndpoint address="/kolder/test" endpointName="a:SOATestEndpoint"
+		id="CXFTest" serviceClass="com.kiktan.endpoint.SOATestEndpoint"
+		serviceName="a:SOATestEndpointService" wsdlURL="wsdl/test.wsdl"
+		xmlns:a="http://javainuse.com">
+
+		<cxf:inInterceptors>
+			<ref bean="loggingInInterceptor" />
+			<ref bean="wss4jInInterceptor" />
+		</cxf:inInterceptors>
+		
+		<cxf:outInterceptors>
+			<ref bean="loggingOutInterceptor" />
+		</cxf:outInterceptors>
+
+	</cxf:cxfEndpoint>
+	<bean class="com.kiktan.processors.CamelProcessor" id="processor" />
+	
+	<!--  camel route starts here -->
+	<camelContext id="camelId" xmlns="http://camel.apache.org/schema/spring">
+		<camel:route id="bookTicket">
+			<camel:from id="_from1" uri="cxf:bean:CXFTest" />
+			<process id="_process1" ref="processor" />
+		</camel:route>
+	</camelContext>
+
+</beans>
