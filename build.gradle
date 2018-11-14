@@ -35,7 +35,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web-services')
 	compile group: 'org.apache.cxf', name: 'cxf-spring-boot-starter-jaxws', version: '3.2.0'
 	compile group: 'org.apache.cxf', name: 'cxf-rt-ws-security', version: '3.2.0'
-	compile('org.codehaus.groovy:groovy')
+	compile('org.codehaus.groovy:groovy-all')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
