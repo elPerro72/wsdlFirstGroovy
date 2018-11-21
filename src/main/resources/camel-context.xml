@@ -56,6 +56,7 @@
 	<!-- custom developed beans for camel route -->
 	<bean class="com.kiktan.processors.CamelProcessor" id="processor"/>
 	<bean class="com.kiktan.processors.MessageMappingSoaTest" id="messageMappingSoaTest"/>
+	<bean class="com.kiktan.test.testGroovy" id="messageMappingSoaTestGroovy"/>
 
 	<!--  camel route starts here -->
 	<camelContext id="camelId" xmlns="http://camel.apache.org/schema/spring">
@@ -64,7 +65,7 @@
 			<camel:setHeader headerName="chainId">
 				<camel:method bean="com.kiktan.common.ProcessHeaders" method="getChainId"></camel:method>
 			</camel:setHeader>
-			<bean ref="messageMappingSoaTest"/>
+			<bean ref="messageMappingSoaTestGroovy"/>
 			<camel:to id="_to12" uri="cxf:bean:CXFTestClient"/>
 			<camel:setBody>
 				<simple>
