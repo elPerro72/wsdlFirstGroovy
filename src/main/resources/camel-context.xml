@@ -65,7 +65,7 @@
 			<camel:setHeader headerName="chainId">
 				<camel:method bean="com.kiktan.common.ProcessHeaders" method="getChainId"></camel:method>
 			</camel:setHeader>
-			<bean ref="messageMappingSoaTestGroovy"/>
+			<bean ref="messageMappingSoaTestGroovy" method="getHeaders"/>
 			<camel:to id="_to12" uri="cxf:bean:CXFTestClient"/>
 			<camel:setBody>
 				<simple>
