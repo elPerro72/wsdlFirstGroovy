@@ -1,22 +1,24 @@
 buildscript {
-	ext {
-		springBootVersion = '1.5.7.RELEASE'
-	}
-	repositories{
+    ext {
+        springBootVersion = '1.5.7.RELEASE'
+        hawtVersion = '2.0.2'
+
+    }
+    repositories {
         jcenter()
         mavenCentral()
     }
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-		classpath("no.nils:wsdl2java:0.10")
-	}
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+//        classpath("no.nils:wsdl2java:0.10")
+    }
 }
 
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
-apply plugin: 'no.nils.wsdl2java'
+//apply plugin: 'no.nils.wsdl2java'
 apply plugin: 'war'
 
 group = 'com.kiktan'
@@ -24,25 +26,29 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 
 dependencies {
-	compile('org.apache.camel:camel-spring-boot-starter:2.19.3')
-	compile('org.apache.camel:camel-cxf:2.19.3')
-	compile group: 'org.apache.camel', name: 'camel-cxf-starter', version: '2.19.3'
-	compile('org.springframework.boot:spring-boot-starter-web-services')
-	compile group: 'org.apache.cxf', name: 'cxf-spring-boot-starter-jaxws', version: '3.2.0'
-	compile group: 'org.apache.cxf', name: 'cxf-rt-ws-security', version: '3.2.0'
-	compile('org.codehaus.groovy:groovy-all')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile('org.apache.camel:camel-spring-boot-starter:2.19.3')
+    compile('org.apache.camel:camel-cxf:2.19.3')
+    compile group: 'org.apache.camel', name: 'camel-cxf-starter', version: '2.19.3'
+    compile('org.springframework.boot:spring-boot-starter-web-services')
+    compile group: 'org.apache.cxf', name: 'cxf-spring-boot-starter-jaxws', version: '3.2.0'
+    compile group: 'org.apache.cxf', name: 'cxf-rt-ws-security', version: '3.2.0'
+    compile('org.codehaus.groovy:groovy-all')
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("org.springframework.boot:spring-boot-starter-security")
+    compile "io.hawt:hawtio-springboot:${hawtVersion}"
+    compile "io.hawt:hawtio-core:${hawtVersion}"
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
-wsdl2java{
-	wsdlsToGenerate = [
-			['-p','com.kiktan.endpoint', '-autoNameResolution',"$projectDir/src/main/resources/wsdl/test.wsdl"]
-	]
-	generatedWsdlDir = file("$projectDir/src/main/java")
-	wsdlDir = file("$projectDir/src/main/resources/wsdl")
-}
+//wsdl2java {
+//    wsdlsToGenerate = [
+//            ['-p', 'com.kiktan.endpoint', '-autoNameResolution', "$projectDir/src/main/resources/wsdl/test.wsdl"]
+//    ]
+//    generatedWsdlDir = file("$projectDir/src/main/java")
+//    wsdlDir = file("$projectDir/src/main/resources/wsdl")
+//}
