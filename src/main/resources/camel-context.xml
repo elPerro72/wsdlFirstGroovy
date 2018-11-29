@@ -38,11 +38,26 @@
 
     </cxf:cxfEndpoint>
 
-    <!-- client call to soapservice -->
+    <!-- client call to SOAtest soap service -->
     <cxf:cxfEndpoint address="http://localhost:8088/mockSOATestBinding" endpointName="a:SOATestEndpoint"
                      id="CXFTestClient"
                      serviceName="a:SOATestEndpointService" wsdlURL="wsdl/test.wsdl"
                      xmlns:a="http://javainuse.com">
+        <cxf:properties>
+            <entry key="dataFormat" value="PAYLOAD"/>
+        </cxf:properties>
+
+        <cxf:features>
+            <ref bean="GZIPFeature"/>
+        </cxf:features>
+
+    </cxf:cxfEndpoint>
+
+    <!-- client call to Settings_2018_11 soap service -->
+    <cxf:cxfEndpoint address="http://localhost:8089/mockSettingsSoap11HTTPBinding" endpointName="b:SettingsHTTP"
+                     id="CXFSettingsClient"
+                     serviceName="b:Settings" wsdlURL="wsdl/Settings_2018_11.wsdl"
+                     xmlns:b="http://www.kiktan.com/Settings/2018/11">
         <cxf:properties>
             <entry key="dataFormat" value="PAYLOAD"/>
         </cxf:properties>
@@ -64,11 +79,11 @@
             <camel:from id="soapServiceTest" uri="cxf:bean:CXFTest"/>
 
             <camel:onException>
-            <camel:exception>java.lang.Exception</camel:exception>
-            <camel:handled>
-                <camel:constant>true</camel:constant>
-            </camel:handled>
-            <camel:to uri="direct:errorHandler"/>
+                <camel:exception>java.lang.Exception</camel:exception>
+                <camel:handled>
+                    <camel:constant>true</camel:constant>
+                </camel:handled>
+                <camel:to uri="direct:errorHandler"/>
             </camel:onException>
 
             <camel:setHeader headerName="chainId">
@@ -77,11 +92,44 @@
             <camel:bean ref="messageMappingSoaTestGroovy" method="getHeaders"/>
             <camel:to uri="validator:file:src/main/resources/wsdl/test.xsd"/>
             <camel:to id="toSoapTestEndpoint" uri="cxf:bean:CXFTestClient"/>
+            <!--<camel:setBody>-->
+                <!--<camel:simple>-->
+                    <!--<![CDATA[<ns:outputSOATest xmlns:ns="http://javainuse.com">-->
+                                <!--<result>${header.chainId}</result>-->
+                                <!--</ns:outputSOATest>-->
+                    <!--]]>-->
+                <!--</camel:simple>-->
+            <!--</camel:setBody>-->
+            <camel:setBody>
+                <camel:simple>
+                    <![CDATA[
+                    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.kiktan.com/Logging/2018/11" xmlns:ns1="http://www.kiktan.com/Settings/Operations/2018/11" xmlns:ns2="http://www.kiktan.com/Settings/Datamodel/2018/11">
+                        <soapenv:Header>
+                            <ns:LogHeader>
+                                <ns:chainId>sonoras imperio</ns:chainId>
+                                <ns:requestId>quae divum incedo</ns:requestId>
+                            </ns:LogHeader>
+                        </soapenv:Header>
+                        <soapenv:Body>
+                            <ns1:GetSettingsRequest>
+                                <ns2:number>gero et</ns2:number>
+                            </ns1:GetSettingsRequest>
+                         </soapenv:Body>
+                    </soapenv:Envelope>
+                    ]]>
+                </camel:simple>
+            </camel:setBody>
+            <camel:removeHeader headerName="operationName"/>
+            <camel:removeHeader headerName="operationNamespace"/>
+            <camel:setHeader headerName="operationName">
+                <camel:constant>GetSettings</camel:constant>
+            </camel:setHeader>
+            <camel:to id="toSoapSettingsEndpoint" uri="cxf:bean:CXFSettingsClient"/>
             <camel:setBody>
                 <camel:simple>
                     <![CDATA[<ns:outputSOATest xmlns:ns="http://javainuse.com">
                                 <result>${header.chainId}</result>
-                                </ns:outputSOATest>
+                            </ns:outputSOATest>
                     ]]>
                 </camel:simple>
             </camel:setBody>
