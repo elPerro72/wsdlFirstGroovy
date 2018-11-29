@@ -3,4 +3,6 @@
 	<xsd:import namespace="http://www.kiktan.com/Settings/Datamodel/2018/11" schemaLocation="SettingsDatamodel_2018_11.xsd"/>
 	<xsd:element name="GetSettingsRequest" type="dm:GetSettingsRequestType" nillable="true"/>
 	<xsd:element name="GetSettingsResponse" type="dm:GetSettingsResponseType" nillable="true"/>
+	<xsd:element name="CreateSettingsRequest" type="dm:GetSettingsRequestType" nillable="true"/>
+	<xsd:element name="CreateSettingsResponse" type="dm:GetSettingsResponseType" nillable="true"/>
 </xsd:schema>

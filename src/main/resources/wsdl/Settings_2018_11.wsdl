@@ -18,6 +18,12 @@
 	<message name="GetSettingsResponse">
 		<part name="parameter" element="op:GetSettingsResponse"/>
 	</message>
+	<message name="CreateSettingsRequest">
+		<part name="parameter" element="op:CreateSettingsRequest"/>
+	</message>
+	<message name="CreateSettingsResponse">
+		<part name="parameter" element="op:CreateSettingsResponse"/>
+	</message>
 	<message name="LogHeader">
 		<part name="LogHeader" element="lh:LogHeader"/>
 	</message>
@@ -34,12 +40,34 @@
 			<fault name="FunctionalError" message="tns:ErrorList"/>
 			<fault name="TechnicalError" message="tns:TechnicalError"/>
 		</operation>
+		<operation name="CreateSettings">
+			<input message="tns:CreateSettingsRequest" wsaw:Action="http://www.kiktan.com/Settings/2018/11/CreateSettingsRequest"/>
+			<output message="tns:CreateSettingsResponse" wsaw:Action="http://www.kiktan.com/Settings/2018/11/CreateSettingsResponse"/>
+			<fault name="FunctionalError" message="tns:ErrorList"/>
+			<fault name="TechnicalError" message="tns:TechnicalError"/>
+		</operation>
 	</portType>
 	<binding name="SettingsSoap11HTTPBinding" type="tns:SettingsNonReliableMsg">
 		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
 		<wsaw:UsingAddressing wsdl:required="true"/>
 		<operation name="GetSettings">
 			<soap:operation soapAction="http://www.kiktan.com/Settings/2018/11/GetSettingsRequest" style="document"/>
+			<input>
+				<soap:header message="tns:LogHeader" part="LogHeader" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+			<fault name="FunctionalError">
+				<soap:fault name="FunctionalError" use="literal"/>
+			</fault>
+			<fault name="TechnicalError">
+				<soap:fault name="TechnicalError" use="literal"/>
+			</fault>
+		</operation>
+		<operation name="CreateSettings">
+			<soap:operation soapAction="http://www.kiktan.com/Settings/2018/11/CreateSettingsRequest" style="document"/>
 			<input>
 				<soap:header message="tns:LogHeader" part="LogHeader" use="literal"/>
 				<soap:body use="literal"/>
