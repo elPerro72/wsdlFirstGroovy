@@ -89,41 +89,24 @@
             <camel:setHeader headerName="chainId">
                 <camel:method bean="com.kiktan.common.ProcessHeaders" method="getChainId"></camel:method>
             </camel:setHeader>
+            <!-- set body for backend call to SOATest service -->
             <camel:bean ref="messageMappingSoaTestGroovy" method="getHeaders"/>
             <camel:to uri="validator:file:src/main/resources/wsdl/test.xsd"/>
             <camel:to id="toSoapTestEndpoint" uri="cxf:bean:CXFTestClient"/>
-            <!--<camel:setBody>-->
-                <!--<camel:simple>-->
-                    <!--<![CDATA[<ns:outputSOATest xmlns:ns="http://javainuse.com">-->
-                                <!--<result>${header.chainId}</result>-->
-                                <!--</ns:outputSOATest>-->
-                    <!--]]>-->
-                <!--</camel:simple>-->
-            <!--</camel:setBody>-->
+            <!-- set body for backend call to Settings_2018_11 service -->
             <camel:setBody>
                 <camel:simple>
                     <![CDATA[
-                    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.kiktan.com/Logging/2018/11" xmlns:ns1="http://www.kiktan.com/Settings/Operations/2018/11" xmlns:ns2="http://www.kiktan.com/Settings/Datamodel/2018/11">
-                        <soapenv:Header>
-                            <ns:LogHeader>
-                                <ns:chainId>sonoras imperio</ns:chainId>
-                                <ns:requestId>quae divum incedo</ns:requestId>
-                            </ns:LogHeader>
-                        </soapenv:Header>
-                        <soapenv:Body>
-                            <ns1:GetSettingsRequest>
+                            <ns1:GetSettingsRequest xmlns:ns1="http://www.kiktan.com/Settings/Operations/2018/11" xmlns:ns2="http://www.kiktan.com/Settings/Datamodel/2018/11">
                                 <ns2:number>gero et</ns2:number>
                             </ns1:GetSettingsRequest>
-                         </soapenv:Body>
-                    </soapenv:Envelope>
                     ]]>
                 </camel:simple>
             </camel:setBody>
+            <!-- remove operation en operation namespace from previous call -->
             <camel:removeHeader headerName="operationName"/>
             <camel:removeHeader headerName="operationNamespace"/>
-            <camel:setHeader headerName="operationName">
-                <camel:constant>GetSettings</camel:constant>
-            </camel:setHeader>
+            <camel:to uri="validator:file:src/main/resources/wsdl/SettingsOperations_2018_11.xsd"/>
             <camel:to id="toSoapSettingsEndpoint" uri="cxf:bean:CXFSettingsClient"/>
             <camel:setBody>
                 <camel:simple>
@@ -135,6 +118,7 @@
             </camel:setBody>
         </camel:route>
 
+        <!-- catch all errors the inherit fomr java.lang.Exception -->
         <camel:route id="errorHandler">
             <camel:from uri="direct:errorHandler"/>
             <camel:setBody>
