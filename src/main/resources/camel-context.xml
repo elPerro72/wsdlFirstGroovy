@@ -69,7 +69,6 @@
     </cxf:cxfEndpoint>
 
     <!-- custom developed beans for camel route -->
-    <bean class="com.kiktan.processors.CamelProcessor" id="processor"/>
     <bean class="com.kiktan.processors.MessageMappingSoaTest" id="messageMappingSoaTest"/>
     <bean class="com.kiktan.test.testGroovy" id="messageMappingSoaTestGroovy"/>
 
