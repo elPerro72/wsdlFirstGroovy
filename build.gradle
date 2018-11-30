@@ -42,6 +42,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-security")
     compile "io.hawt:hawtio-springboot:${hawtVersion}"
     compile "io.hawt:hawtio-core:${hawtVersion}"
+    compile group: 'org.apache.ws.security', name: 'wss4j', version: '1.6.19'
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 

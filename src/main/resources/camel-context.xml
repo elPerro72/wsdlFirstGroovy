@@ -11,12 +11,25 @@
 
     <!-- Out of the box beans related to camel and cxf stuff -->
     <bean id="GZIPFeature" class="org.apache.cxf.transport.common.gzip.GZIPFeature"/>
+
     <bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor"
           id="wss4jInInterceptor">
         <constructor-arg>
             <map>
                 <entry key="action" value="UsernameToken"/>
                 <entry key="passwordType" value="PasswordDigest"/>
+                <entry key="passwordCallbackClass" value="com.kiktan.wssecurity.ServerPasswordCallback"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <bean class="org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor"
+          id="wss4jOutInterceptor">
+        <constructor-arg>
+            <map>
+                <entry key="action" value="UsernameToken"/>
+                <entry key="passwordType" value="PasswordDigest"/>
+                <entry key="user" value="jon"/>
                 <entry key="passwordCallbackClass" value="com.kiktan.wssecurity.ServerPasswordCallback"/>
             </map>
         </constructor-arg>
@@ -43,6 +56,11 @@
                      id="CXFTestClient"
                      serviceName="a:SOATestEndpointService" wsdlURL="wsdl/test.wsdl"
                      xmlns:a="http://javainuse.com">
+
+        <cxf:outInterceptors>
+            <ref bean="wss4jOutInterceptor"/>
+        </cxf:outInterceptors>
+
         <cxf:properties>
             <entry key="dataFormat" value="PAYLOAD"/>
         </cxf:properties>
@@ -76,7 +94,6 @@
     <camelContext id="camelId" xmlns="http://camel.apache.org/schema/spring">
         <camel:route id="WsdlContractFirstMaven">
             <camel:from id="soapServiceTest" uri="cxf:bean:CXFTest"/>
-
             <camel:onException>
                 <camel:exception>java.lang.Exception</camel:exception>
                 <camel:handled>
@@ -89,7 +106,9 @@
                 <camel:method bean="com.kiktan.common.ProcessHeaders" method="getChainId"></camel:method>
             </camel:setHeader>
             <!-- set body for backend call to SOATest service -->
-            <camel:bean ref="messageMappingSoaTestGroovy" method="getHeaders"/>
+            <!--<camel:bean ref="messageMappingSoaTestGroovy"/>-->
+            <!-- remove soapheaders -->
+            <camel:removeHeader headerName="org.apache.cxf.headers.Header.list"/>
             <camel:to uri="validator:file:src/main/resources/wsdl/test.xsd"/>
             <camel:to id="toSoapTestEndpoint" uri="cxf:bean:CXFTestClient"/>
             <!-- set body for backend call to Settings_2018_11 service operation GetSettings -->
