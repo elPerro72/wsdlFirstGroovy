@@ -4,9 +4,6 @@ import org.apache.camel.Exchange
 import org.apache.camel.Processor
 import org.apache.cxf.binding.soap.SoapHeader
 import org.apache.cxf.headers.Header
-import org.apache.ws.security.WSConstants
-import org.apache.ws.security.message.WSSecHeader
-import org.apache.ws.security.message.WSSecUsernameToken
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 
@@ -20,8 +17,8 @@ class testGroovy implements Processor {
     void process(Exchange exchange) throws Exception {
 
         String body = exchange.getIn().getBody(String.class);
-
-        List<SoapHeader> soapHeaders = new ArrayList<SoapHeader>();
+        ArrayList<SoapHeader> soapHeaders = exchange.getIn().getHeader("org.apache.cxf.headers.Header.list");
+       // List<SoapHeader> soapHeaders = new ArrayList<SoapHeader>();
 
         String userName = "Bert"
         String password = "kolder";
@@ -36,12 +33,12 @@ class testGroovy implements Processor {
         dbf.setValidating(false);
         DocumentBuilder db = dbf.newDocumentBuilder();
         Document doc = db.newDocument();
-        Element authHeader = doc.createElementNS("http://www.Test.com/", "AuthHeader");
+        Element authHeader = doc.createElementNS("http://www.kiktan.com/", "AuthHeader");
         doc.appendChild(authHeader);
-        Element clientId = doc.createElementNS("http://www.Test.com/", "ClientId");
+        Element clientId = doc.createElementNS("http://www.kiktan.com/", "ClientId");
         clientId.setTextContent(userName);
         authHeader.appendChild(clientId);
-        Element passwordEl = doc.createElementNS("http://www.Test.com/", "Password");
+        Element passwordEl = doc.createElementNS("http://www.kiktan.com/", "Password");
         passwordEl.setTextContent(password);
         authHeader.appendChild(passwordEl);
 

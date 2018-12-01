@@ -105,10 +105,14 @@
             <camel:setHeader headerName="chainId">
                 <camel:method bean="com.kiktan.common.ProcessHeaders" method="getChainId"></camel:method>
             </camel:setHeader>
+
+            <camel:setProperty propertyName="chainId">
+                <camel:method bean="com.kiktan.common.ProcessHeaders" method="getChainId"></camel:method>
+            </camel:setProperty>
             <!-- set body for backend call to SOATest service -->
-            <!--<camel:bean ref="messageMappingSoaTestGroovy"/>-->
+            <camel:bean ref="messageMappingSoaTestGroovy"/>
             <!-- remove soapheaders -->
-            <camel:removeHeader headerName="org.apache.cxf.headers.Header.list"/>
+            <!--<camel:removeHeader headerName="org.apache.cxf.headers.Header.list"/>-->
             <camel:to uri="validator:file:src/main/resources/wsdl/test.xsd"/>
             <camel:to id="toSoapTestEndpoint" uri="cxf:bean:CXFTestClient"/>
             <!-- set body for backend call to Settings_2018_11 service operation GetSettings -->
@@ -155,7 +159,7 @@
             <camel:setBody>
                 <camel:simple>
                     <![CDATA[<ns:outputSOATest xmlns:ns="http://javainuse.com">
-                                <result>${header.chainId}</result>
+                                <result>${property.chainId}</result>
                             </ns:outputSOATest>
                     ]]>
                 </camel:simple>
