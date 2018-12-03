@@ -113,7 +113,7 @@
             <camel:bean ref="messageMappingSoaTestGroovy"/>
             <!-- remove soapheaders -->
             <!--<camel:removeHeader headerName="org.apache.cxf.headers.Header.list"/>-->
-            <camel:to uri="validator:file:src/main/resources/wsdl/test.xsd"/>
+            <camel:to uri="validator:/wsdl/test.xsd"/>
             <camel:to id="toSoapTestEndpoint" uri="cxf:bean:CXFTestClient"/>
             <!-- set body for backend call to Settings_2018_11 service operation GetSettings -->
             <camel:setBody>
@@ -132,7 +132,7 @@
             <camel:setHeader headerName="operationName">
                 <camel:constant>GetSettings</camel:constant>
             </camel:setHeader>
-            <camel:to uri="validator:file:src/main/resources/wsdl/SettingsOperations_2018_11.xsd"/>
+            <camel:to uri="validator:/wsdl/SettingsOperations_2018_11.xsd"/>
             <camel:to id="toSoapSettingsEndpoint" uri="cxf:bean:CXFSettingsClient"/>
 
             <!-- set body for backend call to Settings_2018_11 service operation CreateSettings -->
@@ -152,7 +152,7 @@
             <camel:setHeader headerName="operationName">
                 <camel:constant>CreateSettings</camel:constant>
             </camel:setHeader>
-            <camel:to uri="validator:file:src/main/resources/wsdl/SettingsOperations_2018_11.xsd"/>
+            <camel:to uri="validator:/wsdl/SettingsOperations_2018_11.xsd"/>
             <camel:to id="toSoapSettingsEndpoint" uri="cxf:bean:CXFSettingsClient"/>
 
             <!-- set response body back to frontend -->
