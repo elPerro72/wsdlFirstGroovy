@@ -110,50 +110,50 @@
                 <camel:method bean="com.kiktan.common.ProcessHeaders" method="getChainId"></camel:method>
             </camel:setProperty>
             <!-- set body for backend call to SOATest service -->
-            <camel:bean ref="messageMappingSoaTestGroovy"/>
-            <!-- remove soapheaders -->
-            <!--<camel:removeHeader headerName="org.apache.cxf.headers.Header.list"/>-->
-            <camel:to uri="validator:/wsdl/test.xsd"/>
-            <camel:to id="toSoapTestEndpoint" uri="cxf:bean:CXFTestClient"/>
-            <!-- set body for backend call to Settings_2018_11 service operation GetSettings -->
-            <camel:setBody>
-                <camel:simple>
-                    <![CDATA[
-                            <ns1:GetSettingsRequest xmlns:ns1="http://www.kiktan.com/Settings/Operations/2018/11" xmlns:ns2="http://www.kiktan.com/Settings/Datamodel/2018/11">
-                                <ns2:number>gero et</ns2:number>
-                            </ns1:GetSettingsRequest>
-                    ]]>
-                </camel:simple>
-            </camel:setBody>
-            <!-- if operation not set, remove operation en operation namespace from previous call -->
-            <!--<camel:removeHeader headerName="operationName"/>-->
-            <camel:removeHeader headerName="operationNamespace"/>
-            <!-- in case there are multiple operation in wsdl, set operation -->
-            <camel:setHeader headerName="operationName">
-                <camel:constant>GetSettings</camel:constant>
-            </camel:setHeader>
-            <camel:to uri="validator:/wsdl/SettingsOperations_2018_11.xsd"/>
-            <camel:to id="toSoapSettingsEndpoint" uri="cxf:bean:CXFSettingsClient"/>
+            <!--<camel:bean ref="messageMappingSoaTestGroovy"/>-->
+            <!--&lt;!&ndash; remove soapheaders &ndash;&gt;-->
+            <!--&lt;!&ndash;<camel:removeHeader headerName="org.apache.cxf.headers.Header.list"/>&ndash;&gt;-->
+            <!--<camel:to uri="validator:/wsdl/test.xsd"/>-->
+            <!--<camel:to id="toSoapTestEndpoint" uri="cxf:bean:CXFTestClient"/>-->
+            <!--&lt;!&ndash; set body for backend call to Settings_2018_11 service operation GetSettings &ndash;&gt;-->
+            <!--<camel:setBody>-->
+                <!--<camel:simple>-->
+                    <!--<![CDATA[-->
+                            <!--<ns1:GetSettingsRequest xmlns:ns1="http://www.kiktan.com/Settings/Operations/2018/11" xmlns:ns2="http://www.kiktan.com/Settings/Datamodel/2018/11">-->
+                                <!--<ns2:number>gero et</ns2:number>-->
+                            <!--</ns1:GetSettingsRequest>-->
+                    <!--]]>-->
+                <!--</camel:simple>-->
+            <!--</camel:setBody>-->
+            <!--&lt;!&ndash; if operation not set, remove operation en operation namespace from previous call &ndash;&gt;-->
+            <!--&lt;!&ndash;<camel:removeHeader headerName="operationName"/>&ndash;&gt;-->
+            <!--<camel:removeHeader headerName="operationNamespace"/>-->
+            <!--&lt;!&ndash; in case there are multiple operation in wsdl, set operation &ndash;&gt;-->
+            <!--<camel:setHeader headerName="operationName">-->
+                <!--<camel:constant>GetSettings</camel:constant>-->
+            <!--</camel:setHeader>-->
+            <!--<camel:to uri="validator:/wsdl/SettingsOperations_2018_11.xsd"/>-->
+            <!--<camel:to id="toSoapSettingsEndpoint" uri="cxf:bean:CXFSettingsClient"/>-->
 
-            <!-- set body for backend call to Settings_2018_11 service operation CreateSettings -->
-            <camel:setBody>
-                <camel:simple>
-                    <![CDATA[
-                            <ns1:CreateSettingsRequest xmlns:ns1="http://www.kiktan.com/Settings/Operations/2018/11" xmlns:ns2="http://www.kiktan.com/Settings/Datamodel/2018/11">
-                                <ns2:number>gero et</ns2:number>
-                            </ns1:CreateSettingsRequest>
-                    ]]>
-                </camel:simple>
-            </camel:setBody>
-            <!-- if operation not set, remove operation en operation namespace from previous call -->
-            <!--<camel:removeHeader headerName="operationName"/>-->
-            <camel:removeHeader headerName="operationNamespace"/>
-            <!-- in case there are multiple operation in wsdl, set operation -->
-            <camel:setHeader headerName="operationName">
-                <camel:constant>CreateSettings</camel:constant>
-            </camel:setHeader>
-            <camel:to uri="validator:/wsdl/SettingsOperations_2018_11.xsd"/>
-            <camel:to id="toSoapSettingsEndpoint" uri="cxf:bean:CXFSettingsClient"/>
+            <!--&lt;!&ndash; set body for backend call to Settings_2018_11 service operation CreateSettings &ndash;&gt;-->
+            <!--<camel:setBody>-->
+                <!--<camel:simple>-->
+                    <!--<![CDATA[-->
+                            <!--<ns1:CreateSettingsRequest xmlns:ns1="http://www.kiktan.com/Settings/Operations/2018/11" xmlns:ns2="http://www.kiktan.com/Settings/Datamodel/2018/11">-->
+                                <!--<ns2:number>gero et</ns2:number>-->
+                            <!--</ns1:CreateSettingsRequest>-->
+                    <!--]]>-->
+                <!--</camel:simple>-->
+            <!--</camel:setBody>-->
+            <!--&lt;!&ndash; if operation not set, remove operation en operation namespace from previous call &ndash;&gt;-->
+            <!--&lt;!&ndash;<camel:removeHeader headerName="operationName"/>&ndash;&gt;-->
+            <!--<camel:removeHeader headerName="operationNamespace"/>-->
+            <!--&lt;!&ndash; in case there are multiple operation in wsdl, set operation &ndash;&gt;-->
+            <!--<camel:setHeader headerName="operationName">-->
+                <!--<camel:constant>CreateSettings</camel:constant>-->
+            <!--</camel:setHeader>-->
+            <!--<camel:to uri="validator:/wsdl/SettingsOperations_2018_11.xsd"/>-->
+            <!--<camel:to id="toSoapSettingsEndpoint" uri="cxf:bean:CXFSettingsClient"/>-->
 
             <!-- set response body back to frontend -->
             <camel:setBody>
