@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:lh="http://www.kiktan.com/Logging/2018/11" xmlns:error="http://www.kiktan.com/ErrorHandling/2018/11" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://www.kiktan.com/Settings/2018/11" xmlns:dm="http://www.kiktan.com/Settings/DataModel/2018/11" xmlns:op="http://www.kiktan.com/Settings/Operations/2018/11" name="Settings" targetNamespace="http://www.kiktan.com/Settings/2018/11">
+	<documentation>
+		<version>
+			<versionDescription>Just a WSDL to test imports in camel</versionDescription>
+		</version>
+	</documentation>
+	<types>
+		<xsd:schema elementFormDefault="qualified" targetNamespace="http://www.kiktan.com/Settings/2018/11">
+			<xsd:import namespace="http://www.kiktan.com/Settings/Operations/2018/11" schemaLocation="SettingsOperations_2018_11.xsd"/>
+			<xsd:import namespace="http://www.kiktan.com/Logging/2018/11" schemaLocation="Logging_2018_11.xsd"/>
+			<xsd:import namespace="http://www.kiktan.com/ErrorHandling/2018/11" schemaLocation="Error_2018_11.xsd"/>
+		</xsd:schema>
+	</types>
+	<message name="GetSettingsRequest">
+		<part name="parameter" element="op:GetSettingsRequest"/>
+	</message>
+	<message name="GetSettingsResponse">
+		<part name="parameter" element="op:GetSettingsResponse"/>
+	</message>
+	<message name="CreateSettingsRequest">
+		<part name="parameter" element="op:CreateSettingsRequest"/>
+	</message>
+	<message name="CreateSettingsResponse">
+		<part name="parameter" element="op:CreateSettingsResponse"/>
+	</message>
+	<message name="LogHeader">
+		<part name="LogHeader" element="lh:LogHeader"/>
+	</message>
+	<message name="ErrorList">
+		<part name="ErrorList" element="error:ErrorList"/>
+	</message>
+	<message name="TechnicalError">
+		<part name="TechnicalError" element="error:TechnicalError"/>
+	</message>
+	<portType name="SettingsNonReliableMsg">
+		<operation name="GetSettings">
+			<input message="tns:GetSettingsRequest" wsaw:Action="http://www.kiktan.com/Settings/2018/11/GetSettingsRequest"/>
+			<output message="tns:GetSettingsResponse" wsaw:Action="http://www.kiktan.com/Settings/2018/11/GetSettingsResponse"/>
+			<fault name="FunctionalError" message="tns:ErrorList"/>
+			<fault name="TechnicalError" message="tns:TechnicalError"/>
+		</operation>
+		<operation name="CreateSettings">
+			<input message="tns:CreateSettingsRequest" wsaw:Action="http://www.kiktan.com/Settings/2018/11/CreateSettingsRequest"/>
+			<output message="tns:CreateSettingsResponse" wsaw:Action="http://www.kiktan.com/Settings/2018/11/CreateSettingsResponse"/>
+			<fault name="FunctionalError" message="tns:ErrorList"/>
+			<fault name="TechnicalError" message="tns:TechnicalError"/>
+		</operation>
+	</portType>
+	<binding name="SettingsSoap11HTTPBinding" type="tns:SettingsNonReliableMsg">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsaw:UsingAddressing wsdl:required="true"/>
+		<operation name="GetSettings">
+			<soap:operation soapAction="http://www.kiktan.com/Settings/2018/11/GetSettingsRequest" style="document"/>
+			<input>
+				<soap:header message="tns:LogHeader" part="LogHeader" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+			<fault name="FunctionalError">
+				<soap:fault name="FunctionalError" use="literal"/>
+			</fault>
+			<fault name="TechnicalError">
+				<soap:fault name="TechnicalError" use="literal"/>
+			</fault>
+		</operation>
+		<operation name="CreateSettings">
+			<soap:operation soapAction="http://www.kiktan.com/Settings/2018/11/CreateSettingsRequest" style="document"/>
+			<input>
+				<soap:header message="tns:LogHeader" part="LogHeader" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+			<fault name="FunctionalError">
+				<soap:fault name="FunctionalError" use="literal"/>
+			</fault>
+			<fault name="TechnicalError">
+				<soap:fault name="TechnicalError" use="literal"/>
+			</fault>
+		</operation>
+	</binding>
+	<service name="Settings">
+		<port name="SettingsHTTP" binding="tns:SettingsSoap11HTTPBinding">
+			<soap:address location="http://www.kiktan.com/tobereplaced"/>
+		</port>
+	</service>
+</definitions>

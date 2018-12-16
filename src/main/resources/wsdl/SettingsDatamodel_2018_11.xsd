@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.kiktan.com/Settings/Datamodel/2018/11" targetNamespace="http://www.kiktan.com/Settings/Datamodel/2018/11" elementFormDefault="qualified">
+	<xsd:complexType name="GetSettingsRequestType">
+		<xsd:sequence>
+			<xsd:element name="number" type="tns:numberType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetSettingsResponseType">
+		<xsd:sequence>
+			<xsd:element name="Intermediair">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="number" type="tns:numberType"/>
+						<xsd:element name="name" type="xsd:string"/>
+						<xsd:element name="opsNumber" type="xsd:string"/>
+						<xsd:element name="url" type="xsd:string"/>
+						<xsd:element name="AddressCollection" type="tns:AddressCollectionType" minOccurs="0"/>
+						<xsd:element name="AccountManager" minOccurs="0">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="number" type="tns:numberType"/>
+									<xsd:element name="Person" type="tns:PersonType"/>
+									<xsd:element name="Address" type="tns:AddressType" minOccurs="0"/>
+									<xsd:element name="endDate"/>
+									<xsd:element name="place"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SettingsCollection" type="tns:SettingsCollectionType" minOccurs="0"/>
+			<xsd:element name="ExternalIdCollection" type="tns:ExternalldCollectionType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ExternalldCollectionType">
+		<xsd:sequence>
+			<xsd:element name="ExternalId" type="tns:ExternalIdType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SettingsCollectionType">
+		<xsd:sequence>
+			<xsd:element name="setting" type="tns:SettingType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AddressCollectionType">
+		<xsd:sequence>
+			<xsd:element name="Address" type="tns:AddressType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PersonType">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string"/>
+			<xsd:element name="lastName" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="birthDate" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="gender" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ExternalIdType">
+		<xsd:sequence>
+			<xsd:element name="description" type="xsd:string"/>
+			<xsd:element name="number" type="tns:labelType"/>
+			<xsd:element name="type" type="xsd:string"/>
+			<xsd:element name="startDate" type="tns:startDateType"/>
+			<xsd:element name="endDate" type="tns:endDateType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SettingType">
+		<xsd:sequence>
+			<xsd:element name="label" type="tns:labelType"/>
+			<xsd:element name="productgroup" type="xsd:string"/>
+			<xsd:element name="startDate" type="tns:startDateType"/>
+			<xsd:element name="endDate" type="tns:endDateType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AddressType">
+		<xsd:sequence>
+			<xsd:element name="addressType" type="xsd:string"/>
+			<xsd:element name="street" type="xsd:string"/>
+			<xsd:element name="houseNumber" type="xsd:string"/>
+			<xsd:element name="postalCode" type="xsd:string"/>
+			<xsd:element name="place" type="xsd:string"/>
+			<xsd:element name="country" type="xsd:string"/>
+			<xsd:element name="region" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="email" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="numberType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="labelType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="startDateType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="endDateType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:lh="http://www.kiktan.com/Logging/2018/11" targetNamespace="http://www.kiktan.com/Logging/2018/11" elementFormDefault="qualified" id="Logging">
+	<xs:element name="LogHeader" type="lh:LogHeaderType" nillable="true"/>
+	<xs:complexType name="LogHeaderType">
+		<xs:sequence>
+			<xs:element name="chainId" type="lh:ChainLogIdType" minOccurs="0"/>
+			<xs:element name="requestId" type="lh:ChainLogIdType"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:simpleType name="ChainLogIdType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
