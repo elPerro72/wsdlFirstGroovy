@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dm="http://www.kiktan.com/Settings/Datamodel/2018/11" xmlns:tns="http://www.kiktan.com/Settings/Operations/2018/11" targetNamespace="http://www.kiktan.com/Settings/Operations/2018/11" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:import namespace="http://www.kiktan.com/Settings/Datamodel/2018/11" schemaLocation="SettingsDatamodel_2018_11.xsd"/>
+	<xsd:element name="GetSettingsRequest" type="dm:GetSettingsRequestType" nillable="true"/>
+	<xsd:element name="GetSettingsResponse" type="dm:GetSettingsResponseType" nillable="true"/>
+	<xsd:element name="CreateSettingsRequest" type="dm:GetSettingsRequestType" nillable="true"/>
+	<xsd:element name="CreateSettingsResponse" type="dm:GetSettingsResponseType" nillable="true"/>
+</xsd:schema>

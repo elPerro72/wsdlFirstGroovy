@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:e="http://www.kiktan.com/ErrorHandling/2018/11" targetNamespace="http://www.kiktan.com/ErrorHandling/2018/11" elementFormDefault="qualified" id="Error">
+	<xs:element name="TechnicalError" type="e:TechnicalErrorType" nillable="true"/>
+	<xs:element name="ErrorList" type="e:ErrorListType" nillable="true"/>
+	<xs:complexType name="ErrorListType">
+		<xs:sequence>
+			<xs:element name="Error" type="e:ErrorType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorType">
+		<xs:sequence>
+			<xs:element name="code" type="e:ErrorCodeType"/>
+			<xs:element name="source" type="e:ErrorSourceType"/>
+			<xs:element name="message" type="e:ErrorMessageType"/>
+
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TechnicalErrorType">
+		<xs:sequence>
+			<xs:element name="code" type="e:ErrorCodeType" minOccurs="0"/>
+			<xs:element name="source" type="e:ErrorSourceType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ErrorCodeType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ErrorMessageType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ErrorSourceType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,16 @@
+<xs:schema targetNamespace="http://javainuse.com" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="inputSOATest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="xs:string" name="test" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="outputSOATest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="xs:string" name="result" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
