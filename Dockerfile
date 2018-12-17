@@ -9,7 +9,7 @@ EXPOSE 8095 9090
 #
 # Useful docker commands:
 #
-# docker images --> You can use the docker images command to see a list of all images on your system.
+# docker images --> You can use the "docker images" command to see a list of all images on your system.
 # docker ps --> List container
 # docker ps --> The docker ps command shows you all containers that are currently running.
 #
