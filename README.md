@@ -1,1 +1,1 @@
-# wsdlFirstGroovy.
+# wsdlFirstGroovy
