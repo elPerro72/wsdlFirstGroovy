@@ -31,11 +31,3 @@ steps:
   inputs:
     artifactName: 'jars'
     pathToPublish: '$(build.artifactStagingDirectory)'
-
-    - task: AzureRmWebAppDeployment@4
-      inputs:
-        ConnectionType: 'AzureRM'
-        azureSubscription: 'Betalen naar gebruik (b3505d23-c0c3-4776-b7ea-70d63db67dde)'
-        appType: 'webAppLinux'
-        WebAppName: 'camelrdh'
-        packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
